@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Jarvis Translator</string>
+    <string name="action_settings">Settings</string>
+    <string name="hello_world">Translate My English To : </string>
+	
+    <string name="country_prompt">Choose the Language</string>
+    <string-array name="country_arrays">
+        <item>华语(普通话)</item>
+        <item>Malay</item>
+        <item>日本語</item>
+        <item>한국의</item>
+        <item>भारतीय</item>
+        <item>ประเทศไทย</item>
+        <item>русский</item>
+    </string-array>
+    
+</resources>
