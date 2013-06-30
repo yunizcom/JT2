@@ -8,6 +8,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+    android:focusableInTouchMode="true"
     tools:context=".MainActivity" >
 
     <ImageView
@@ -16,14 +17,12 @@
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/imageView1"
         android:layout_alignParentRight="true"
-        android:layout_marginRight="20dp"
-        android:adjustViewBounds="true"
+        android:layout_marginRight="1dp"
         android:maxHeight="60dp"
         android:maxWidth="60dp"
         android:minHeight="60dp"
         android:minWidth="60dp"
         android:onClick="rpButtonClick"
-        android:scaleType="centerCrop"
         android:src="@drawable/ic_speak" />
 
     <EditText
@@ -33,13 +32,11 @@
         android:layout_alignParentLeft="true"
         android:width="300dp"
         android:layout_below="@+id/spinner1"
-        android:ems="4"
+        android:textSize="12dp"
         android:inputType="textMultiLine"
         android:hint="Type english words only..."
-        android:minHeight="60dp" >
-
-        <requestFocus />
-    </EditText>
+        android:scrollbars = "vertical"
+        android:maxHeight="60dp" />
 
     <EditText
         android:id="@+id/editText1"
@@ -48,10 +45,10 @@
         android:layout_alignParentLeft="true"
         android:width="300dp"
         android:layout_below="@+id/textView2"
-        android:ems="4"
-        android:enabled="false"
+        android:textSize="12dp"
         android:inputType="textMultiLine"
-        android:minHeight="60dp" />
+        android:scrollbars = "vertical"
+        android:maxHeight="60dp" />
 
     <TextView
         android:id="@+id/textView1"
@@ -62,20 +59,7 @@
         android:text="ENGLISH"
         android:textStyle="bold"
         android:textColor="#333333"
-        android:textSize="40sp" />
-
-    <ImageView
-        android:id="@+id/imageView1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/textView1"
-        android:layout_toLeftOf="@+id/imageView2"
-        android:maxHeight="240dp"
-        android:maxWidth="240dp"
-        android:minHeight="240dp"
-        android:minWidth="240dp"
-        android:onClick="speakButtonClick"
-        android:src="@drawable/ic_speak" />
+        android:textSize="40dp" />
 
     <Spinner
         android:id="@+id/spinner1"
@@ -86,8 +70,7 @@
         android:entries="@array/country_arrays"
         android:prompt="@string/country_prompt"
         android:textColor="#333333"
-        android:maxWidth="400dp"
-        android:textSize="20sp" />
+        android:maxWidth="400dp" />
     
     <Button
         android:id="@+id/button3"
@@ -117,7 +100,19 @@
         android:minHeight="80dp"
         android:minWidth="40dp"
         android:onClick="textConvertButtonClick"
-        android:scaleType="centerCrop"
+        android:src="@drawable/ic_speak" />
+
+    <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView1"
+        android:layout_centerHorizontal="true"
+        android:maxHeight="240dp"
+        android:maxWidth="240dp"
+        android:minHeight="240dp"
+        android:minWidth="240dp"
+        android:onClick="speakButtonClick"
         android:src="@drawable/ic_speak" />
 
 </RelativeLayout>

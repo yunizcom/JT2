@@ -32,9 +32,13 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Point;
 import android.graphics.drawable.Drawable;
 import android.speech.RecognizerIntent;
+import android.util.DisplayMetrics;
 import android.util.Log;
+import android.util.TypedValue;
+import android.view.Display;
 import android.view.Menu;
 import android.view.View;
 import android.view.WindowManager;
@@ -43,6 +47,7 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class MainActivity extends Activity {
@@ -57,6 +62,10 @@ public class MainActivity extends Activity {
 	private ImageView imageButton1;
 	private ImageView imageButton2;
 	private ImageView imageButton3;
+	private TextView textView1;
+	
+	public int screenWidth = 0;
+	public int screenHeight = 0;
 	
 	@SuppressLint("NewApi")
 	@SuppressWarnings("deprecation")
@@ -68,6 +77,13 @@ public class MainActivity extends Activity {
 		getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 		
 		//----------detect device setting and adapt environment
+		Display display = getWindowManager().getDefaultDisplay();
+		Point size = new Point();
+		display.getSize(size);
+		
+		screenWidth = size.x;
+		screenHeight = size.y;
+		
 	    StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
 	    StrictMode.setThreadPolicy(policy);
 		//----------detect device setting and adapt environment
@@ -75,13 +91,13 @@ public class MainActivity extends Activity {
 		spinner1 = (Spinner) findViewById(R.id.spinner1);
 		speakReturn = (EditText) findViewById(R.id.textView2);
 		editText1 = (EditText) findViewById(R.id.editText1);
+		textView1 = (TextView) findViewById(R.id.textView1);
 		
 		mainCanvas = (RelativeLayout) findViewById(R.id.mainCanvas);
 		
 		imageButton1 = (ImageView) findViewById(R.id.imageView1);
 		imageButton2 = (ImageView) findViewById(R.id.imageView2);
 		imageButton3 = (ImageView) findViewById(R.id.imageView3);
-
 		
 		try 
 		{
@@ -111,6 +127,36 @@ public class MainActivity extends Activity {
 		{
 		    return;
 		}
+		
+		//----------auto Adjust UI Elements size----------
+		double setNewHeight = screenHeight * 0.05;
+		textView1.setTextSize(TypedValue.COMPLEX_UNIT_PX,(int)setNewHeight);
+		setNewHeight = screenHeight * 0.45;
+		imageButton1.setMinimumHeight((int)setNewHeight);
+		imageButton1.setMaxHeight((int)setNewHeight);
+		setNewHeight = screenHeight * 0.05;
+		spinner1.setMinimumHeight((int)setNewHeight);
+		setNewHeight = screenHeight * 0.12;
+		double setNewWidth = screenWidth * 0.9;
+		speakReturn.setMaxHeight((int)setNewHeight);
+		speakReturn.setMinHeight((int)setNewHeight);
+		editText1.setMaxHeight((int)setNewHeight);
+		editText1.setMinHeight((int)setNewHeight);
+		speakReturn.setMaxWidth((int)setNewWidth);
+		speakReturn.setMinWidth((int)setNewWidth);
+		editText1.setMaxWidth((int)setNewWidth);
+		editText1.setMinWidth((int)setNewWidth);
+		setNewHeight = screenHeight * 0.09;
+		imageButton2.setMinimumHeight((int)setNewHeight);
+		imageButton2.setMaxHeight((int)setNewHeight);
+		setNewHeight = screenHeight * 0.13;
+		setNewWidth = screenWidth * 0.1;
+		imageButton3.setMinimumHeight((int)setNewHeight);
+		imageButton3.setMaxHeight((int)setNewHeight);
+		imageButton3.setMinimumWidth((int)setNewWidth);
+		imageButton3.setMaxWidth((int)setNewWidth);
+		imageButton3.setPadding(0, (int)(setNewHeight * 0.3), 0, 0);
+		//----------auto Adjust UI Elements size----------
 		
 		mMediaPlayer  = new MediaPlayer();
 
