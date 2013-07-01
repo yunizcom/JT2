@@ -35,7 +35,6 @@ import android.content.Intent;
 import android.graphics.Point;
 import android.graphics.drawable.Drawable;
 import android.speech.RecognizerIntent;
-import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.Display;
@@ -44,7 +43,6 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -75,19 +73,34 @@ public class MainActivity extends Activity {
 		setContentView(R.layout.activity_main);
 		
 		getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+		int sdk = android.os.Build.VERSION.SDK_INT;
 		
 		//----------detect device setting and adapt environment
 		Display display = getWindowManager().getDefaultDisplay();
 		Point size = new Point();
-		display.getSize(size);
 		
-		screenWidth = size.x;
-		screenHeight = size.y;
-		
+		boolean smallScreen = false;
+		try
+		{ 
+			display.getSize(size); 
+			screenWidth = size.x; 
+			screenHeight = size.y; 
+			smallScreen = false;
+		} 
+		catch (NoSuchMethodError e) 
+		{ 
+			screenWidth = display.getWidth(); 
+			screenHeight = display.getHeight(); 
+			smallScreen = true;
+		} 
+	
 	    StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
 	    StrictMode.setThreadPolicy(policy);
 		//----------detect device setting and adapt environment
-		
+
+	    double setNewHeight = screenHeight;
+		double setNewWidth = screenWidth;
+	    
 		spinner1 = (Spinner) findViewById(R.id.spinner1);
 		speakReturn = (EditText) findViewById(R.id.textView2);
 		editText1 = (EditText) findViewById(R.id.editText1);
@@ -104,7 +117,6 @@ public class MainActivity extends Activity {
 		    InputStream ims = getAssets().open("bg.jpg");
 		    Drawable d = Drawable.createFromStream(ims, null);
 
-		    int sdk = android.os.Build.VERSION.SDK_INT;
 		    if(sdk < android.os.Build.VERSION_CODES.JELLY_BEAN) {
 		    	mainCanvas.setBackgroundDrawable(d);
 		    } else {
@@ -129,7 +141,18 @@ public class MainActivity extends Activity {
 		}
 		
 		//----------auto Adjust UI Elements size----------
-		double setNewHeight = screenHeight * 0.05;
+		if(smallScreen == true){
+			imageButton1.setAdjustViewBounds(true);
+			imageButton1.setScaleType( ImageView.ScaleType.FIT_CENTER);
+			imageButton2.setAdjustViewBounds(true);
+			imageButton2.setScaleType( ImageView.ScaleType.FIT_CENTER);
+			imageButton3.setAdjustViewBounds(true);
+			imageButton3.setScaleType( ImageView.ScaleType.FIT_CENTER);
+		}
+		
+		
+		setNewHeight = screenHeight * 0.05;
+		setNewWidth = screenWidth * 0.9;
 		textView1.setTextSize(TypedValue.COMPLEX_UNIT_PX,(int)setNewHeight);
 		setNewHeight = screenHeight * 0.45;
 		imageButton1.setMinimumHeight((int)setNewHeight);
@@ -137,7 +160,6 @@ public class MainActivity extends Activity {
 		setNewHeight = screenHeight * 0.05;
 		spinner1.setMinimumHeight((int)setNewHeight);
 		setNewHeight = screenHeight * 0.12;
-		double setNewWidth = screenWidth * 0.9;
 		speakReturn.setMaxHeight((int)setNewHeight);
 		speakReturn.setMinHeight((int)setNewHeight);
 		editText1.setMaxHeight((int)setNewHeight);
@@ -149,6 +171,8 @@ public class MainActivity extends Activity {
 		setNewHeight = screenHeight * 0.09;
 		imageButton2.setMinimumHeight((int)setNewHeight);
 		imageButton2.setMaxHeight((int)setNewHeight);
+		imageButton2.setMinimumWidth((int)setNewHeight);
+		imageButton2.setMaxWidth((int)setNewHeight);
 		setNewHeight = screenHeight * 0.13;
 		setNewWidth = screenWidth * 0.1;
 		imageButton3.setMinimumHeight((int)setNewHeight);
@@ -334,6 +358,9 @@ public class MainActivity extends Activity {
 			break;
 			case 6:
 				selectedCountry = "ru";
+			break;
+			case 7:
+				selectedCountry = "fr";
 			break;
 			default:
 				selectedCountry = "zh-CN";
