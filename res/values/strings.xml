@@ -8,11 +8,21 @@
     <string name="country_prompt">Choose the Language</string>
     <string-array name="country_arrays">
         <item>华语(普通话)</item>
+        <item>English</item>
         <item>Malay</item>
         <item>日本語</item>
         <item>한국의</item>
         <item>भारतीय</item>
         <item>ประเทศไทย</item>
+        <item>русский</item>
+        <item>français</item>
+    </string-array>
+    <string-array name="country2_arrays">
+        <item>English</item>
+        <item>华语(普通话)</item>
+        <item>Malay</item>
+        <item>日本語</item>
+        <item>한국의</item>
         <item>русский</item>
         <item>français</item>
     </string-array>

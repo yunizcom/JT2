@@ -60,7 +60,7 @@ public class MainActivity extends Activity {
 	private ImageView imageButton1;
 	private ImageView imageButton2;
 	private ImageView imageButton3;
-	private TextView textView1;
+	private Spinner textView1;
 	
 	public int screenWidth = 0;
 	public int screenHeight = 0;
@@ -104,7 +104,7 @@ public class MainActivity extends Activity {
 		spinner1 = (Spinner) findViewById(R.id.spinner1);
 		speakReturn = (EditText) findViewById(R.id.textView2);
 		editText1 = (EditText) findViewById(R.id.editText1);
-		textView1 = (TextView) findViewById(R.id.textView1);
+		textView1 = (Spinner) findViewById(R.id.textView1);
 		
 		mainCanvas = (RelativeLayout) findViewById(R.id.mainCanvas);
 		
@@ -151,13 +151,13 @@ public class MainActivity extends Activity {
 		}
 		
 		
-		setNewHeight = screenHeight * 0.05;
+		setNewHeight = screenHeight * 0.03;
 		setNewWidth = screenWidth * 0.9;
-		textView1.setTextSize(TypedValue.COMPLEX_UNIT_PX,(int)setNewHeight);
+		textView1.setMinimumHeight((int)setNewHeight);
 		setNewHeight = screenHeight * 0.45;
 		imageButton1.setMinimumHeight((int)setNewHeight);
 		imageButton1.setMaxHeight((int)setNewHeight);
-		setNewHeight = screenHeight * 0.05;
+		setNewHeight = screenHeight * 0.03;
 		spinner1.setMinimumHeight((int)setNewHeight);
 		setNewHeight = screenHeight * 0.12;
 		speakReturn.setMaxHeight((int)setNewHeight);
@@ -195,8 +195,8 @@ public class MainActivity extends Activity {
         Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
         intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,
                 RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
-        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, "en-US");
-        intent.putExtra(RecognizerIntent.EXTRA_PROMPT, "Say your words.");
+        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, fromSelectedCountry());
+        intent.putExtra(RecognizerIntent.EXTRA_PROMPT, fromSelectedCountrySayWords());
         intent.putExtra(RecognizerIntent.EXTRA_MAX_RESULTS, 100);
         startActivityForResult(intent, SPEECH_REQUEST_CODE);
     }
@@ -211,6 +211,7 @@ public class MainActivity extends Activity {
 	public void textConvertButtonClick(View v){
 		if(speakReturn.getText().toString().trim().length() > 0){
 			combinedSpeakCountry(speakReturn.getText().toString());
+			Toast.makeText(getApplicationContext(), fromSelectedCountryWaiting() , Toast.LENGTH_LONG).show();
 		}else{
 			Toast.makeText(getApplicationContext(), "Please type some english words before continue." , Toast.LENGTH_LONG).show();
 		}
@@ -263,6 +264,7 @@ public class MainActivity extends Activity {
                     String mostLikelyThingHeard = matches.get(0);
                     speakReturn.setText(mostLikelyThingHeard);
                     combinedSpeakCountry(mostLikelyThingHeard);
+                    Toast.makeText(getApplicationContext(), fromSelectedCountryWaiting() , Toast.LENGTH_LONG).show();
                 }
             }
             else
@@ -283,11 +285,11 @@ public class MainActivity extends Activity {
 			e.printStackTrace();
 		}
 		
-		callGoogleTranslateApi(wordsEncoded, currentSelectedCountry());
+		callGoogleTranslateApi(wordsEncoded, fromSelectedCountry(), currentSelectedCountry());
 	}
 	 
-	public void callGoogleTranslateApi(String words, String country){
-		String url = "http://translate.google.com/translate_a/t?client=p&hl=en&sl=en&tl=" + country + "&ie=UTF-8&oe=UTF-8&multires=1&oc=1&otf=1&ssel=0&tsel=0&sc=1&q=" + words;
+	public void callGoogleTranslateApi(String words, String fromCountry, String country){
+		String url = "http://translate.google.com/translate_a/t?client=p&hl=" + fromCountry + "&sl=" + fromCountry + "&tl=" + country + "&ie=UTF-8&oe=UTF-8&multires=1&oc=1&otf=1&ssel=0&tsel=0&sc=1&q=" + words;
 		//-------load JSON
 		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
         //nameValuePairs.add(new BasicNameValuePair("name", "MAMAMA"));
@@ -333,37 +335,154 @@ public class MainActivity extends Activity {
 		//-------load JSON
 	}
 	
-	public String currentSelectedCountry(){
-		int selectedIndex = spinner1.getSelectedItemPosition();
-		String selectedCountry = "zh-CN";
+	public String langLibrary1(int selectedIndex){
+		String selectedCountry = "zh_CN";
 		
 		switch(selectedIndex){
 			case 0:
-				selectedCountry = "zh-CN";
+				selectedCountry = "zh_CN";
 			break;	
 			case 1:
+				selectedCountry = "en";
+			break;		
+			case 2:
 				selectedCountry = "id";
 			break;
-			case 2:
+			case 3:
 				selectedCountry = "ja";
 			break;
-			case 3:
+			case 4:
 				selectedCountry = "ko";
 			break;
-			case 4:
+			case 5:
 				selectedCountry = "hi";
 			break;
-			case 5:
+			case 6:
 				selectedCountry = "th";
 			break;
-			case 6:
+			case 7:
 				selectedCountry = "ru";
 			break;
-			case 7:
+			case 8:
 				selectedCountry = "fr";
 			break;
 			default:
-				selectedCountry = "zh-CN";
+				selectedCountry = "zh_CN";
+			break;	
+		}
+		
+		return selectedCountry;
+	}
+	
+	public String langLibrary2(int selectedIndex){
+		String selectedCountry = "zh_CN";
+		
+		switch(selectedIndex){
+			case 0:
+				selectedCountry = "en";
+			break;		
+			case 1:
+				selectedCountry = "zh_CN";
+			break;	
+			case 2:
+				selectedCountry = "id";
+			break;
+			case 3:
+				selectedCountry = "ja";
+			break;
+			case 4:
+				selectedCountry = "ko";
+			break;
+			case 5:
+				selectedCountry = "ru";
+			break;
+			case 6:
+				selectedCountry = "fr";
+			break;
+			default:
+				selectedCountry = "zh_CN";
+			break;	
+		}
+		
+		return selectedCountry;
+	}
+	
+	public String fromSelectedCountry(){
+		int selectedIndex = textView1.getSelectedItemPosition();
+		String selectedCountry = langLibrary2(selectedIndex);
+		
+		return selectedCountry;
+	}
+	
+	public String currentSelectedCountry(){
+		int selectedIndex = spinner1.getSelectedItemPosition();
+		String selectedCountry = langLibrary1(selectedIndex);
+		
+		return selectedCountry;
+	}
+	
+	public String fromSelectedCountrySayWords(){
+		int selectedIndex = textView1.getSelectedItemPosition();
+		String selectedCountry = "zh_CN";
+		
+		switch(selectedIndex){
+			case 0:
+				selectedCountry = "Say your words.";
+			break;		
+			case 1:
+				selectedCountry = "说你的话。";
+			break;	
+			case 2:
+				selectedCountry = "Katakanlah kata-kata Anda.";
+			break;
+			case 3:
+				selectedCountry = "あなたの言葉を言う。";
+			break;
+			case 4:
+				selectedCountry = "귀하의 단어를 말한다.";
+			break;
+			case 5:
+				selectedCountry = "Скажите вашим словам.";
+			break;
+			case 6:
+				selectedCountry = "Dites à vos mots.";
+			break;
+			default:
+				selectedCountry = "说你的话。";
+			break;	
+		}
+		
+		return selectedCountry;
+	}
+	
+	public String fromSelectedCountryWaiting(){
+		int selectedIndex = textView1.getSelectedItemPosition();
+		String selectedCountry = "zh_CN";
+		
+		switch(selectedIndex){
+			case 0:
+				selectedCountry = "Please wait for the translation...";
+			break;		
+			case 1:
+				selectedCountry = "请等待在翻译...";
+			break;	
+			case 2:
+				selectedCountry = "Silahkan tunggu terjemahan ...";
+			break;
+			case 3:
+				selectedCountry = "翻訳のためしばらくお待ちください...";
+			break;
+			case 4:
+				selectedCountry = "번역 기다려주십시오 ...";
+			break;
+			case 5:
+				selectedCountry = "Пожалуйста, подождите ... перевод";
+			break;
+			case 6:
+				selectedCountry = "S'il vous plaît attendre la traduction ...";
+			break;
+			default:
+				selectedCountry = "请等待在翻译...";
 			break;	
 		}
 		

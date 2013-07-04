@@ -34,7 +34,6 @@
         android:layout_below="@+id/spinner1"
         android:textSize="12dp"
         android:inputType="textMultiLine"
-        android:hint="Type english words only..."
         android:scrollbars = "vertical"
         android:maxHeight="60dp" />
 
@@ -49,17 +48,17 @@
         android:inputType="textMultiLine"
         android:scrollbars = "vertical"
         android:maxHeight="60dp" />
-
-    <TextView
+    
+    <Spinner
         android:id="@+id/textView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:text="ENGLISH"
-        android:textStyle="bold"
+        android:entries="@array/country2_arrays"
+        android:prompt="@string/country_prompt"
         android:textColor="#333333"
-        android:textSize="40dp" />
+        android:maxWidth="400dp" />
 
     <Spinner
         android:id="@+id/spinner1"
