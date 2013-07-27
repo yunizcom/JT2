@@ -296,38 +296,41 @@ public class MainActivity extends Activity {
         
 		JSONObject json = getJSONfromURL(url, nameValuePairs);
 		try {
-			JSONArray  jsoncontacts = json.getJSONArray("sentences");
-					
-				for(int i=0;i < jsoncontacts.length();i++){						
-			
-			        	JSONObject e = jsoncontacts.getJSONObject(i);
-			        	
-			        	String utf8String = "";
-						try {
-							utf8String = new String(e.getString("trans").getBytes("ISO-8859-1"), "UTF-8");
-						} catch (UnsupportedEncodingException e1) {
-							// TODO Auto-generated catch block
-							e1.printStackTrace();
-						}
-			        	
-						editText1.setText(utf8String);
+			if(json == null){
+				Toast.makeText(getApplicationContext(), "You need internet connection to continue." , Toast.LENGTH_LONG).show();
+			}else{
+				JSONArray  jsoncontacts = json.getJSONArray("sentences");
 						
-			        	//Log.v("STANLY DEBUG","http://translate.google.com/translate_tts?ie=UTF-8&q=" + utf8String + "&tl=" + currentSelectedCountry() + "&total=1&idx=0");
-			        	previousURL = "http://translate.google.com/translate_tts?ie=UTF-8&q=" + utf8String + "&tl=" + currentSelectedCountry() + "&total=1&idx=0";
-			        	
-			        	mMediaPlayer.reset();
-			        	mMediaPlayer.release();
-			        	mMediaPlayer = null;
-			        	
-			        	//-------create and load background song
-			        	mMediaPlayer = MediaPlayer.create(
-			    		    this,
-			    		    Uri.parse("http://translate.google.com/translate_tts?ie=UTF-8&q=" + utf8String + "&tl=" + currentSelectedCountry() + "&total=1&idx=0"));
-			        	mMediaPlayer.start();
-			    		//-------create and load background song
-	
-				}
-			
+					for(int i=0;i < jsoncontacts.length();i++){						
+				
+				        	JSONObject e = jsoncontacts.getJSONObject(i);
+				        	
+				        	String utf8String = "";
+							try {
+								utf8String = new String(e.getString("trans").getBytes("ISO-8859-1"), "UTF-8");
+							} catch (UnsupportedEncodingException e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							}
+				        	
+							editText1.setText(utf8String);
+							
+				        	//Log.v("STANLY DEBUG","http://translate.google.com/translate_tts?ie=UTF-8&q=" + utf8String + "&tl=" + currentSelectedCountry() + "&total=1&idx=0");
+				        	previousURL = "http://translate.google.com/translate_tts?ie=UTF-8&q=" + utf8String + "&tl=" + currentSelectedCountry() + "&total=1&idx=0";
+				        	
+				        	mMediaPlayer.reset();
+				        	mMediaPlayer.release();
+				        	mMediaPlayer = null;
+				        	
+				        	//-------create and load background song
+				        	mMediaPlayer = MediaPlayer.create(
+				    		    this,
+				    		    Uri.parse("http://translate.google.com/translate_tts?ie=UTF-8&q=" + utf8String + "&tl=" + currentSelectedCountry() + "&total=1&idx=0"));
+				        	mMediaPlayer.start();
+				    		//-------create and load background song
+		
+					}
+			}
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
