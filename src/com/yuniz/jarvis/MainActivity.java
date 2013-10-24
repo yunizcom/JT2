@@ -154,7 +154,7 @@ public class MainActivity extends Activity {
 		setNewHeight = screenHeight * 0.03;
 		setNewWidth = screenWidth * 0.9;
 		textView1.setMinimumHeight((int)setNewHeight);
-		setNewHeight = screenHeight * 0.45;
+		setNewHeight = screenHeight * 0.30;
 		imageButton1.setMinimumHeight((int)setNewHeight);
 		imageButton1.setMaxHeight((int)setNewHeight);
 		setNewHeight = screenHeight * 0.03;

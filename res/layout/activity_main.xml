@@ -1,16 +1,23 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:ads= "http://schemas.android.com/apk/lib/com.google.ads"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mainCanvas"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#333333"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
     android:focusableInTouchMode="true"
     tools:context=".MainActivity" >
 
+    <RelativeLayout
+        android:id="@+id/linearLayoutMain"
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:padding="10dp"
+        android:paddingBottom="0dp"
+        android:layout_marginBottom="40dp" >
+    
     <ImageView
         android:id="@+id/imageView2"
         android:layout_width="wrap_content"
@@ -114,4 +121,17 @@
         android:onClick="speakButtonClick"
         android:src="@drawable/ic_speak" />
 
+    </RelativeLayout>
+    
+    <com.google.ads.AdView 
+        android:id="@+id/adView" 
+        android:layout_width="wrap_content" 
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true" 
+        android:layout_alignParentBottom="true" 
+        ads:adSize="BANNER" 
+        ads:adUnitId="a15268c9e82a8fc" 
+        ads:loadAdOnCreate="true" > 
+    </com.google.ads.AdView> 
+    
 </RelativeLayout>
